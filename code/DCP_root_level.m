@@ -1,0 +1,262 @@
+function DCP_root_level(varargin)
+%第一个参数 地址
+%第二个参数：可以设置起始文件夹名
+%第三个参数：可以设置结束文件夹名或者是要处理的个数数字
+    global MATRIX_FLAG;
+    global AAL_1024_FLAG;
+    global AAL_90_FLAG;
+    global RESULT_FILE;
+    global FILE_ORDER;
+    if exist(RESULT_FILE)
+        cd(RESULT_FILE);
+        mkdir('QC');
+    end
+    if nargin < 1
+        disp('ERROR! dpb_root_level.m need at least one Function Parameter! ');
+        return;
+    end    
+    
+    path=varargin{1};
+    Path=dir(path);
+    try
+        cd(path)    
+    catch 
+        warndlg('Please choose a input file','error');
+        return;
+    end
+    Scan_S=1;
+    Scan_E=size(Path,1);    
+    if strcmp(FILE_ORDER,'ALL SUBJECTS'),
+        file_order=[1:1:Scan_E];
+    else
+        file_order=str2num(FILE_ORDER);
+        file_order=file_order+2;
+    end
+%     if nargin == 2 || nargin == 3
+%         S_folder_name=varargin{2};
+%         folder_ID=1;
+%         while(~strcmp(S_folder_name,Path(folder_ID).name))
+%             folder_ID=folder_ID+1;
+%             %没有找到提示错误，退出
+%            if(folder_ID == Scan_E+1)
+%                 disp('ERROR! The start folder name is wrong! please check it!')
+%                 return
+%           end
+%         end    
+%         Scan_S=folder_ID;
+%     end
+%     
+%     if nargin ==3
+%         if isnumeric(varargin{3})==1  %if the varargin{3} is number
+%             
+%             if Scan_S+varargin{3} < Scan_E
+%                 Scan_E=Scan_S+varargin{3};
+%             else
+%                 Scan_E=Scan_E;
+%             end
+%             
+%         else
+%             E_folder_name=varargin{3};
+%             folder_ID=1;
+%             while(~strcmp(E_folder_name,Path(folder_ID).name))
+%             folder_ID=folder_ID+1;
+%             %没有找到提示错误，退出
+%            if(folder_ID == Scan_E+1)
+%                 disp('ERROR! The end folder name is wrong! please check it!')
+%                 return
+%            end
+%         end    
+%         Scan_E=folder_ID;
+%         end
+%     end         
+     
+    if Scan_S > Scan_E
+        temp=Scan_S;
+        Scan_S=Scan_E;
+        Scan_E=temp;
+        clear temp;
+    end
+    
+    for i=Scan_S:Scan_E
+        if (Path(i).name=='.')
+            continue;
+        end
+        if (strcmp(Path(i).name , '..'))
+            continue;
+        end
+        if isempty(find(file_order==i)),
+            continue;
+        end
+        if Path(i).isdir==1,
+            Path(i).name
+            set(varargin{2}.edit19,'String',['Running ' Path(i).name]);
+            cd(Path(i).name);%进入个体内的子目录进行数据转换
+            dpb_individual_level(varargin{2},Path(i).name);
+            cd(path)%转换为一个个体，退出个体目录
+        end
+    end
+    global PARTITION_TEMPLATE;
+    global THRESHOLD_CUSTOME;
+    threshold_custome = num2str(THRESHOLD_CUSTOME);
+    global THRESHOLD_90;
+    threshold_90 = num2str(THRESHOLD_90);
+    global THRESHOLD_1024;
+    threshold_1024 = num2str(THRESHOLD_1024);
+    global INIT_ANGLE; 
+    init_angle = num2str(INIT_ANGLE);
+    global INIT_L_FA;
+    init_l_fa = num2str(INIT_L_FA);
+    global INIT_SEED;
+    init_seed = num2str(INIT_SEED);
+    global FN_FLAG;
+    global FA_FLAG;
+    global LENGTH_FLAG;
+    global MATRIX;
+    if MATRIX == 1
+        if AAL_1024_FLAG == 1
+            for i=Scan_S:Scan_E     
+                if (Path(i).name=='.')
+                    continue;
+                end
+                if (strcmp(Path(i).name , '..'))
+                    continue;
+                end
+                if isempty(find(file_order==i)),
+                    continue;
+                end
+                if Path(i).isdir==1,
+                    cd(path);
+                    cd (Path(i).name)
+                    if FN_FLAG==1,
+                         load(['MATRIX\Matrix_Fnum_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                         str=['Matrix_FNum1024.m' Path(i).name '=Matrix_FNum'];
+                         eval(str);
+                    end
+                    if FA_FLAG==1,
+                        load(['MATRIX\Matrix_FA_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_FA1024.m' Path(i).name '=Matrix_FA'];
+                        eval(str);
+                    end
+                    if LENGTH_FLAG==1,
+                        load(['MATRIX\Matrix_Length_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_Length1024.m' Path(i).name '=Matrix_Length'];
+                        eval(str);
+                    end
+                    try 
+                        cd(RESULT_FILE)
+                    catch
+                        warndlg('Can''t find output file','error');
+                        return;
+                    end
+                end
+            end
+            if FN_FLAG==1,
+                save(['Matrix_FNum_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FNum1024');
+            end
+            if FA_FLAG==1,
+                save(['Matrix_FA_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FA1024');
+            end
+            if LENGTH_FLAG==1,
+                save(['Matrix_Length_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_Length1024');
+            end
+            cd(path);
+        end
+         if AAL_90_FLAG == 1
+             for i=Scan_S:Scan_E     
+                if (Path(i).name=='.')
+                    continue;
+                end
+                if (strcmp(Path(i).name , '..'))
+                    continue;
+                end
+                if isempty(find(file_order==i)),
+                    continue;
+                end
+                if Path(i).isdir==1,
+                    cd(path);
+                    cd (Path(i).name);
+                    if FN_FLAG==1,
+                        load(['MATRIX\Matrix_Fnum_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_FNum90.m' Path(i).name '=Matrix_FNum'];
+                        eval(str);
+                    end
+                    if FA_FLAG==1,
+                        load(['MATRIX\Matrix_FA_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_FA90.m' Path(i).name '=Matrix_FA'];
+                        eval(str);
+                    end
+                    if LENGTH_FLAG==1,
+                        load(['MATRIX\Matrix_Length_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_Length90.m' Path(i).name '=Matrix_Length'];
+                        eval(str);
+                    end
+                    try 
+                         cd(RESULT_FILE)
+                    catch
+                         warndlg('Can''t find output file','error');
+                         return;
+                    end
+                end
+             end
+             if FN_FLAG==1,
+                 save(['Matrix_FNum_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FNum90');
+             end
+             if FA_FLAG==1,
+                 save(['Matrix_FA_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FA90');
+             end
+             if LENGTH_FLAG==1,
+                 save(['Matrix_Length_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_Length90');
+             end
+             cd(path);
+         end
+         if exist(PARTITION_TEMPLATE,'file'),
+             for i=Scan_S:Scan_E     
+                if (Path(i).name=='.')
+                    continue;
+                end
+                if (strcmp(Path(i).name , '..'))
+                    continue;
+                end
+                if isempty(find(file_order==i)),
+                    continue;
+                end
+                if Path(i).isdir==1,
+                    cd(path);
+                    cd (Path(i).name);
+                    if FN_FLAG==1,
+                       load(['MATRIX\Matrix_Fnum_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                       str=['Matrix_FNum.m' Path(i).name '=Matrix_FNum'];
+                       eval(str);
+                    end
+                    if FA_FLAG==1,
+                        load(['MATRIX\Matrix_FA_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_FA.m' Path(i).name '=Matrix_FA'];
+                        eval(str);
+                    end
+                    if LENGTH_FLAG==1,
+                        load(['MATRIX\Matrix_Length_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
+                        str=['Matrix_Length.m' Path(i).name '=Matrix_Length'];
+                        eval(str);
+                    end
+                    try 
+                        cd(RESULT_FILE)
+                    catch
+                        warndlg('Can''t find output file','error');
+                        return;
+                    end
+                end
+             end
+            if FN_FLAG==1,
+                save(['Matrix_FNum_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FNum');
+            end
+            if FA_FLAG==1,
+                save(['Matrix_FA_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_FA');
+            end
+            if LENGTH_FLAG==1,
+                save(['Matrix_Length_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat'], 'Matrix_Length');
+            end
+            cd(path);
+         end
+    end
+    set(varargin{2}.edit19,'String','ALL Finished');
+end

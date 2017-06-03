@@ -1,0 +1,44 @@
+function dpb_reform()
+    modality=dir();
+    for i=3:length(modality),
+        if modality(i).isdir==1,
+            cd(modality(i).name);
+            bvec=dir('*bvec*');
+            if ~isempty(bvec),
+                if ~strcmp(bvec(1).name,'bvec.txt')
+                    movefile(bvec(1).name,'bvec.txt');
+                end
+                bval=dir('*bval*');
+                bval_dtk=dir('bval_dtk');
+                if ~isempty(bval)&&isempty(bval_dtk),
+                    temp=dlmread('bval.txt','');
+                    dlmwrite('bval_dtk',temp','-append');
+                end
+                if ~strcmp(bval(1).name,'bval.txt')
+                    movefile(bval(1).name,'bval.txt');
+                end
+                dti=dir('*.nii');
+                if ~isempty(dti),
+                    if ~strcmp(dti(1).name,'DATA_4D.nii');
+                        movefile(dti(1).name,'DATA_4D.nii');
+                    end
+                else
+                    dti=dir('*.nii.gz'),
+                    if ~strcmp(dti(1).name,'DATA_4D.nii.gz');
+                        movefile(dti(1).name,'DATA_4D.nii.gz');
+                    end
+                end
+            end
+            cd ..
+            if ~isempty(bvec),
+                if ~strcmp(modality(i).name,'DTI_DATA'),
+                    movefile(modality(i).name,'DTI_DATA');
+                end
+            else
+                if ~strcmp(modality(i).name,'PARCELLATION'),
+                    movefile(modality(i).name,'PARCELLATION');
+                end
+            end
+        end
+    end
+end

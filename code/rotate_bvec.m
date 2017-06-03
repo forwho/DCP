@@ -1,0 +1,21 @@
+function rotate_bvec()
+    if exist('bvec_dtk')
+        delete bvec_dtk
+    end
+%     matlist=dir('*.mat');
+%     for i=1:numel(matlist)
+%         load(matlist(i).name);
+%         all_trans{i}=trans;
+%     end
+%     delete *.mat
+%     save 'trans.mat' matlist
+    bvec=dlmread('bvec.txt');
+    for i=1:size(bvec,2)
+        rotmat=importdata('eddy_DTI_4D.txt',' ',5*(i-1)+1);
+        rotmat=decompose(rotmat.data);
+        rot_bvec(i,1)=bvec(1,i)*rotmat(1,1)+bvec(2,i)*rotmat(1,2)+bvec(3,i)*rotmat(1,3);
+        rot_bvec(i,2)=bvec(1,i)*rotmat(2,1)+bvec(2,i)*rotmat(2,2)+bvec(3,i)*rotmat(2,3);
+        rot_bvec(i,3)=bvec(1,i)*rotmat(3,1)+bvec(2,i)*rotmat(3,2)+bvec(3,i)*rotmat(3,3);
+    end
+    dlmwrite('bvec_dtk', rot_bvec, '\t');
+end

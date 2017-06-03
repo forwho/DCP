@@ -1,0 +1,16 @@
+function mask_T1(rT1File, maskFile)
+    rT1 = spm_vol(rT1File);
+    rT1_vol = spm_read_vols(rT1);
+    mask = spm_vol(maskFile);
+    mask_vol = spm_read_vols(mask);
+    for i=1:rT1.dim(1),
+        for j=1:rT1.dim(2),
+            for k=1:rT1.dim(3),
+                if mask_vol(i, j, k)==0,
+                    rT1_vol(i, j, k)=0;
+                end
+            end
+        end
+    end
+    rT1 = spm_write_vol(rT1, rT1_vol);
+return
