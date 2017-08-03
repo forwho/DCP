@@ -32,8 +32,8 @@ function dpb_reform_dti()
             end
         end
     end
-    mkdir('DTI_DATA');
     dti=dir('DTI_*');
+    mkdir('DTI_DATA');
     matrix=[];
     if ~isempty(dti),
         for i=1:length(dti),

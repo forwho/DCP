@@ -129,17 +129,17 @@ function DCP_root_level(varargin)
                     cd (Path(i).name)
                     if FN_FLAG==1,
                          load(['MATRIX\Matrix_Fnum_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                         str=['Matrix_FNum1024.m' Path(i).name '=Matrix_FNum'];
+                         str=['Matrix_FNum1024.' Path(i).name '=Matrix_FNum'];
                          eval(str);
                     end
                     if FA_FLAG==1,
                         load(['MATRIX\Matrix_FA_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_FA1024.m' Path(i).name '=Matrix_FA'];
+                        str=['Matrix_FA1024.' Path(i).name '=Matrix_FA'];
                         eval(str);
                     end
                     if LENGTH_FLAG==1,
                         load(['MATRIX\Matrix_Length_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_Length1024.m' Path(i).name '=Matrix_Length'];
+                        str=['Matrix_Length1024.' Path(i).name '=Matrix_Length'];
                         eval(str);
                     end
                     try 
@@ -177,17 +177,17 @@ function DCP_root_level(varargin)
                     cd (Path(i).name);
                     if FN_FLAG==1,
                         load(['MATRIX\Matrix_Fnum_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_FNum90.m' Path(i).name '=Matrix_FNum'];
+                        str=['Matrix_FNum90.' Path(i).name '=Matrix_FNum'];
                         eval(str);
                     end
                     if FA_FLAG==1,
                         load(['MATRIX\Matrix_FA_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_FA90.m' Path(i).name '=Matrix_FA'];
+                        str=['Matrix_FA90.' Path(i).name '=Matrix_FA'];
                         eval(str);
                     end
                     if LENGTH_FLAG==1,
                         load(['MATRIX\Matrix_Length_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_Length90.m' Path(i).name '=Matrix_Length'];
+                        str=['Matrix_Length90.' Path(i).name '=Matrix_Length'];
                         eval(str);
                     end
                     try 
@@ -225,17 +225,17 @@ function DCP_root_level(varargin)
                     cd (Path(i).name);
                     if FN_FLAG==1,
                        load(['MATRIX\Matrix_Fnum_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                       str=['Matrix_FNum.m' Path(i).name '=Matrix_FNum'];
+                       str=['Matrix_FNum.' Path(i).name '=Matrix_FNum'];
                        eval(str);
                     end
                     if FA_FLAG==1,
                         load(['MATRIX\Matrix_FA_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_FA.m' Path(i).name '=Matrix_FA'];
+                        str=['Matrix_FA.' Path(i).name '=Matrix_FA'];
                         eval(str);
                     end
                     if LENGTH_FLAG==1,
                         load(['MATRIX\Matrix_Length_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat']);
-                        str=['Matrix_Length.m' Path(i).name '=Matrix_Length'];
+                        str=['Matrix_Length.' Path(i).name '=Matrix_Length'];
                         eval(str);
                     end
                     try 

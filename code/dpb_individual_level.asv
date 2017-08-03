@@ -3,6 +3,7 @@ function dpb_individual_level(handles,name)
     path= pwd;
     %step1 ×ª»»
     global DICOM2NII_FLAG;
+    DICOM2NII_FLAG
     if DICOM2NII_FLAG == 1
         set(handles.edit19,'String',['Running ' name ' Convert']);
         dpb_convert(path);
@@ -10,7 +11,7 @@ function dpb_individual_level(handles,name)
     %step2 ÎÐÁ÷½ÃÕý
     global EDDY_FLAG;
     if EDDY_FLAG == 1,
-       set(handles.edit19,'String',['Running ' name ' Eddy Current']);
+        set(handles.edit19,'String',['Running ' name ' Eddy Current']);
        cd(path)
        dti_data=dir('DTI_DATA');
        parcellation=dir('PARCELLATION');

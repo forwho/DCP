@@ -9,12 +9,12 @@ function cat=dicm2nii_bvec(file_num)
 %dicm2nii convert
 mkdir('../PARCELLATION')
 path=pwd;
-dicomstruct = [dir('*.IMA'),dir('*dcm')];% 支持IMA格式的文件和XXXX格式文件
-if numel(dicomstruct)==0   %没有IMA文件，UNKNOW DATASET    
-    fprintf('UNKNOW DATASET \n');
-    cat=2;
-    return;    
-end
+% dicomstruct = [dir('*.IMA'),dir('*dcm')];% 支持IMA格式的文件和XXXX格式文件
+% if numel(dicomstruct)==0   %没有IMA文件，UNKNOW DATASET    
+%     fprintf('UNKNOW DATASET \n');
+%     cat=2;
+%     return;    
+% end
 %dicm2nii(path,path,'nii');
 %转换前删除之前转换的文件，只留下dcm数据
 

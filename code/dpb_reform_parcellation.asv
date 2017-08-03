@@ -24,7 +24,7 @@ function dpb_reform_parcellation()
             if flag==1,
                 t1file=dir([modality(i).name '\co*nii']);
                 movefile([modality(i).name '\' t1file(1).name],'PARCELLATION');
-                movefile(modality(i).name, 'T1_1')
+                movefile([modality(i)])
                 break
             end            
         end
