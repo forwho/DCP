@@ -21,7 +21,7 @@ function trk_Matrix_dpb(path,num,count)
    init_l_fa = num2str(INIT_L_FA);
    global INIT_SEED;
    init_seed = num2str(INIT_SEED);
-   dir_folder = path
+   dir_folder = path;
    Fibers={};
    %trkPath=fullfile(dir_folder,'\DTI_DATA\track_tmp.trk');
    trkPath=fullfile(dir_folder,['\DTI_DATA\dti_' init_angle '_' init_l_fa '_' init_seed '.trk']);
@@ -139,13 +139,13 @@ function trk_Matrix_dpb(path,num,count)
      dlmwrite(['MATRIX\Matrix_FNum_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FNum,'delimiter', '\t','precision','%.6f') 
       end
       if FA_FLAG==1,
-      Matrix_FA(Matrix_FNum<=count)=0;
+      %Matrix_FA(Matrix_FNum<=count)=0;
       str=['save MATRIX\Matrix_FA_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_FA'];
       eval(str);
     dlmwrite(['MATRIX\Matrix_FA_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FA,'delimiter', '\t','precision','%.6f') 
       end
       if LENGTH_FLAG==1,
-      Matrix_Length(Matrix_FNum<=count)=0;
+      %Matrix_Length(Matrix_FNum<=count)=0;
       str=['save MATRIX\Matrix_Length_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_Length'];
       eval(str);
       dlmwrite(['MATRIX\Matrix_Length_1024_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_Length,'delimiter', '\t','precision','%.6f') 
@@ -170,14 +170,14 @@ function trk_Matrix_dpb(path,num,count)
       dlmwrite(['MATRIX\Matrix_FNum_90_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FNum,'delimiter', '\t','precision','%.6f') 
       end
       if FA_FLAG==1,
-      Matrix_FA(Matrix_FNum<=count)=0;
+      %Matrix_FA(Matrix_FNum<=count)=0;
       Matrix_FA=Matrix_FA(1:90,1:90);
       str=['save MATRIX\Matrix_FA_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_FA'];
       eval(str);
       dlmwrite(['MATRIX\Matrix_FA_90_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FA,'delimiter', '\t','precision','%.6f') 
       end
       if LENGTH_FLAG==1,
-      Matrix_Length(Matrix_FNum<=count)=0;
+      %Matrix_Length(Matrix_FNum<=count)=0;
       Matrix_Length=Matrix_Length(1:90,1:90);
       str=['save MATRIX\Matrix_Length_90_' threshold_90 '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_Length'];
       eval(str);
@@ -196,13 +196,13 @@ function trk_Matrix_dpb(path,num,count)
      dlmwrite(['MATRIX\Matrix_FNum_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FNum,'delimiter', '\t','precision','%.6f') 
       end
       if FA_FLAG==1,
-      Matrix_FA(Matrix_FNum<=count)=0;
+      %Matrix_FA(Matrix_FNum<=count)=0;
       str=['save MATRIX\Matrix_FA_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_FA'];
       eval(str);
      dlmwrite(['MATRIX\Matrix_FA_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_FA,'delimiter', '\t','precision','%.6f') 
       end
       if LENGTH_FLAG==1,
-      Matrix_Length(Matrix_FNum<=count)=0;
+      %Matrix_Length(Matrix_FNum<=count)=0;
       str=['save MATRIX\Matrix_Length_' threshold_custome '_' init_angle '_' init_l_fa '_' init_seed '.mat Matrix_Length'];
       eval(str);
      dlmwrite(['MATRIX\Matrix_Length_' threshold_1024 '_' init_angle '_' init_l_fa '_' init_seed '.txt'],Matrix_Length,'delimiter', '\t','precision','%.6f') 
